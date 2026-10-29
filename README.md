@@ -23,4 +23,4 @@ Every sales CTA must be rendered by `components/CTA.astro`, use exactly `https:/
 Product facts come from `src/data/product-facts.json` (manufacturer statements with source URLs; `null` renders as "Not stated by manufacturer"). Do not add a price, discount or health claim without updating the claims register.
 
 ## Deploy
-The site is not deployed. `deploy/github-pages.yml` is a ready workflow (copy it to `.github/workflows/` of a repository that contains this folder, set the repository variable `SITE_URL`, enable Pages with the "GitHub Actions" source). Any static host works: upload `dist/`.
+The site is live at https://sandercrooijmans.github.io/ (GitHub Pages, branch gh-pages). Any static host also works: upload `dist/`.

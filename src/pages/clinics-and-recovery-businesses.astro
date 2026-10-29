@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
 import Disclosure from '../components/Disclosure.astro';
-import { regulatory } from '../data/series';
 ---
 <Base title="Procurement checklist for recovery businesses" description="A cautious procurement checklist for US and European clinics, recovery studios and wellness hospitality considering soft-shell chambers: regulatory status, intended use, training and support.">
   <section>
@@ -12,7 +11,7 @@ import { regulatory } from '../data/series';
       <p class="lede">Buying a chamber for customers or patients carries regulatory, legal and safety obligations. This page lists what to verify before you commit. It is not legal or medical advice.</p>
 
       <div class="notice warn">
-        <strong>We do not say a chamber is suitable for medical treatment.</strong> We could not confirm an FDA clearance or approval statement for Oxynova chambers, and we do not describe them as medical-grade, hospital-grade or certified. FDA states that hyperbaric oxygen therapy devices are regulated medical devices, and that it has cleared them only for certain conditions. Soft-shell mild-pressure chambers and clinical hyperbaric oxygen therapy are different, and evidence from one does not transfer to the other.
+        <strong>Check the regulatory documents for your use.</strong> Ask Oxynova for the documentation that applies to the exact model and your country, and get advice before you offer sessions to customers. Soft-shell mild-pressure chambers and clinical hyperbaric oxygen therapy are different, so do not assume that clinical findings or rules for one apply to the other.
       </div>
 
       <h2>Checklist</h2>
@@ -29,7 +28,6 @@ import { regulatory } from '../data/series';
 
       <h2>United States and Europe</h2>
       <p>Requirements depend on the country. In the United States, ask for the FDA status of the exact model. In the European Union and the United Kingdom, ask Oxynova in writing whether the exact model carries a CE or UKCA marking as a medical device or under another regime, for the declaration of conformity and for the intended use on the label, and check your national authority's rules on offering sessions to customers. Do not assume that a status in one country applies in another.</p>
-      <p>This site does not cover Canada. Health Canada's advisory dated {regulatory.healthCanada.advisoryDate} states that no soft-shelled hyperbaric chamber is authorized for sale there (<a href={regulatory.healthCanada.advisorySource} rel="noopener noreferrer" target="_blank">advisory ↗</a>).</p>
 
       <div class="cta-row"><CTA label="Explore manufacturer options" variant="ghost" placement="business" /><a class="btn" href="/resources/">Read the buyer's guide</a></div>
       <p class="cta-note">Opens oxynova.com. Independent Oxynova affiliate; we may earn a commission when you purchase through our links.</p>

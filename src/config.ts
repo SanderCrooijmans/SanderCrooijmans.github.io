@@ -30,6 +30,6 @@ export const MANUFACTURER_SUPPORT = {
 };
 
 export const REGION_NOTICE =
-  'This site is written for visitors in the United States and Europe. Rules for these chambers differ by country, so ask the manufacturer in writing about the regulatory status for your country before you buy. Canada is not covered.';
+  'This site is written for visitors in the United States and Europe. Delivery, documentation and product rules differ by country, so confirm the details for your country with Oxynova before you buy.';
 
 export const DATA_ACCESS_DATE = '2026-10-27';

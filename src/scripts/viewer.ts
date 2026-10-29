@@ -5,6 +5,15 @@ type Three = typeof import('three');
 
 const MODEL_URL = '/models/chamber-concept.glb';
 const CLIP = 'ZipperPanelOpen';
+/** 3D anchor of each numbered dot (glTF space, metres), in the same order as the features in ChamberViewer.astro. */
+const HOTSPOTS: [number, number, number][] = [
+  [0.0, 0.95, 0.3],     // zipper opening
+  [0.15, 0.7, -0.29],   // liner and frame
+  [0.72, 0.4, 0.0],     // mattress
+  [-0.26, 0.575, 0.385], // window
+  [-0.63, 0.84, 0.29],  // valve and gauge
+  [-0.82, 0.45, 0.0],   // head end and hose
+];
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 class ChamberViewer {
@@ -12,6 +21,10 @@ class ChamberViewer {
   private stage: HTMLElement;
   private stateEl: HTMLElement;
   private hotspots: HTMLElement | null;
+  private dots: HTMLButtonElement[] = [];
+  private card: HTMLElement | null;
+  private hint: HTMLElement | null;
+  private activeDot = -1;
   private buttons: Record<string, HTMLButtonElement> = {};
   private loading: Promise<boolean> | null = null;
   private ready = false;
@@ -35,19 +48,27 @@ class ChamberViewer {
 
   private readonly outsideTarget = [0.05, 0.5, 0];
   private readonly outsideCam = [3.6, 2.0, 4.4];
-  private readonly insideCam = [1.2, 4.6, 1.8];
-  private readonly insideTarget = [-0.1, 0.5, 0];
+  private readonly insideCam = [0.0, 2.9, 0.9];
+  private readonly insideTarget = [-0.02, 0.55, 0.0];
 
   constructor(root: HTMLElement) {
     this.root = root;
     this.stage = root.querySelector('[data-stage]') as HTMLElement;
     this.stateEl = root.querySelector('[data-state]') as HTMLElement;
     this.hotspots = root.querySelector('[data-hotspots]');
+    this.card = root.querySelector('[data-card]');
+    this.hint = root.querySelector('[data-hint]');
+    this.dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    this.dots.forEach((d, i) => d.addEventListener('click', () => this.selectDot(i)));
+    root.querySelector('[data-card-close]')?.addEventListener('click', () => this.closeCard());
     root.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((b) => {
       this.buttons[b.dataset.action!] = b;
       b.addEventListener('click', () => this.onAction(b.dataset.action!));
     });
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && this.inside) this.reset(); });
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !this.inside) return;
+      if (this.activeDot >= 0) this.closeCard(); else this.reset();
+    });
     root.addEventListener('pointerenter', () => void this.load(), { once: true });
     root.addEventListener('focusin', () => void this.load(), { once: true });
     const saveData = (navigator as any).connection?.saveData === true;
@@ -89,6 +110,7 @@ class ChamberViewer {
       this.failed = true;
       this.setState('Static view (3D unavailable)');
       Object.values(this.buttons).forEach((b) => { b.disabled = true; b.title = '3D view unavailable'; });
+      this.root.querySelector('[data-feature-list]')?.classList.add('show'); // keep the feature text when 3D is unavailable
       return false;
     });
     return this.loading;
@@ -171,7 +193,49 @@ class ChamberViewer {
     this.mixer.update(dt);
     if (this.tween) this.stepTween();
     else this.controls.update();
+    if (this.hotspots?.classList.contains('show')) this.placeDots();
     this.renderer.render(this.scene, this.camera);
+  }
+
+  /** Projects each dot's 3D anchor onto the stage; hides a dot that is behind the camera or off-stage. */
+  private placeDots() {
+    const T = this.THREE;
+    const w = this.stage.clientWidth, h = this.stage.clientHeight;
+    const v = new T.Vector3();
+    this.dots.forEach((d, i) => {
+      v.set(...HOTSPOTS[i]).project(this.camera);
+      const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h;
+      const on = v.z < 1 && x > 14 && x < w - 14 && y > 14 && y < h - 14;
+      d.hidden = !on;
+      if (on) d.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+    });
+  }
+
+  private selectDot(i: number) {
+    if (this.activeDot === i) { this.closeCard(); return; }
+    this.activeDot = i;
+    const label = this.root.querySelectorAll('[data-feature-list] li')[i];
+    const title = label?.querySelector('strong')?.textContent ?? '';
+    const text = (label?.textContent ?? '').slice(title.length);
+    if (this.card) {
+      (this.card.querySelector('[data-card-title]') as HTMLElement).textContent = title;
+      (this.card.querySelector('[data-card-text]') as HTMLElement).textContent = text;
+      this.card.hidden = false;
+    }
+    this.dots.forEach((d, k) => d.setAttribute('aria-expanded', String(k === i)));
+  }
+
+  private closeCard() {
+    this.activeDot = -1;
+    if (this.card) this.card.hidden = true;
+    this.dots.forEach((d) => d.setAttribute('aria-expanded', 'false'));
+  }
+
+  private showDots(on: boolean) {
+    this.hotspots?.classList.toggle('show', on);
+    this.dots.forEach((d) => { d.tabIndex = on ? 0 : -1; if (!on) d.hidden = true; });
+    if (this.hint) this.hint.hidden = !on;
+    if (!on) this.closeCard();
   }
 
   private spherical(p: number[], t: number[]) {
@@ -228,7 +292,7 @@ class ChamberViewer {
     setTimeout(() => {
       this.moveCamera(this.insideCam, this.insideTarget, 1.8, () => {
         this.busy = false; this.setState('Interior view (illustrative)');
-        this.hotspots?.classList.add('show');
+        this.showDots(true);
       });
     }, delay);
   }
@@ -237,7 +301,7 @@ class ChamberViewer {
     if (!this.ready) return;
     const wasOpen = this.panelOpen;
     this.busy = true; this.inside = false;
-    this.hotspots?.classList.remove('show');
+    this.showDots(false);
     this.buttons.inside?.setAttribute('aria-pressed', 'false');
     this.setState(wasOpen ? 'Closing panel' : 'Resetting view');
     this.moveCamera(this.outsideCam, this.outsideTarget, wasOpen ? 1.4 : 0.9, () => {

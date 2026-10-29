@@ -1,12 +1,33 @@
 ---
 interface Props { id?: string; hero?: boolean }
 const { id = 'viewer', hero = false } = Astro.props;
+
+// Order matches HOTSPOTS in src/scripts/viewer.ts (which holds each dot's 3D position).
+// Comfort and design details only, from manufacturer statements or visible in its photographs.
+const features = [
+  { title: 'Easy-entry zipper opening', text: 'A long opening along the top makes getting in and out straightforward. Oxynova describes a double or triple integrated zipper system. The opening shown is an artistic cutaway.' },
+  { title: 'Open liner on a steel frame', text: 'An internal stainless steel frame holds the chamber’s shape, so the interior stays open around you. Oxynova says it assembles with quick connections and no tools.' },
+  { title: 'Orthopedic mattress', text: 'Oxynova describes an orthopedic mattress with a phthalate-free cover: a supportive, comfortable surface to lie back and relax on.' },
+  { title: 'Windows for light and a view', text: 'Oxynova lists 5½ in windows, with counts that vary by model (this illustration shows three per side). Daylight comes in and you can see out, so the space does not feel closed in.' },
+  { title: 'Air valve and pressure gauge', text: 'Oxynova’s photographs show an air valve and a pressure gauge on the outside of the shell, so the chamber’s settings are easy to see.' },
+  { title: 'Head end and hose connection', text: 'A fitting at the head end connects the compressor line. Oxynova lists a 9 ft (2.5 m) hose and an 800 W compressor with a stated sound level under 60 dBA, so the compressor can stand a short distance away.' },
+];
 ---
 <div class="viewer-block" data-viewer id={id}>
   <div class="viewer" data-stage>
     <img class="poster" src="/images/3d/chamber-hero-closed.webp" alt="Illustration of a soft-shell chamber on a black cradle: a navy fabric cylinder with round windows, two valves and a curved zipper panel on top."
       width="1800" height="1200" fetchpriority={hero ? 'high' : 'auto'} decoding="async" />
     <span class="state" data-state aria-live="polite">Static view</span>
+    <div class="dots" data-hotspots>
+      {features.map((f, i) => (
+        <button type="button" class="dot" data-dot={i} aria-label={f.title} aria-expanded="false" tabindex="-1" hidden><span aria-hidden="true">{i + 1}</span></button>
+      ))}
+    </div>
+    <div class="dot-card" data-card role="region" aria-live="polite" hidden>
+      <button type="button" class="dot-card-close" data-card-close aria-label="Close">×</button>
+      <strong data-card-title></strong>
+      <p data-card-text></p>
+    </div>
   </div>
   <div class="viewer-controls" role="group" aria-label="3D view controls">
     <button type="button" data-action="rotate" aria-pressed="false">Rotate</button>
@@ -14,11 +35,9 @@ const { id = 'viewer', hero = false } = Astro.props;
     <button type="button" data-action="inside" aria-pressed="false">Look inside</button>
     <button type="button" data-action="reset">Reset</button>
   </div>
-  <ul class="hotspots" data-hotspots aria-label="Interior features shown in this illustration">
-    <li><strong>Flexible zipper panel</strong>Oxynova describes a double or triple integrated system zipper. The opening shown is an artistic cutaway.</li>
-    <li><strong>Liner and frame</strong>Oxynova describes a stainless steel internal framework. The liner shape here is illustrative.</li>
-    <li><strong>Mattress</strong>Oxynova describes an orthopedic mattress with a phthalate-free cover.</li>
-    <li><strong>Windows</strong>Oxynova lists 5&nbsp;1/2&nbsp;in windows, with counts that vary by model. This model shows three per side.</li>
+  <p class="dot-hint" data-hint hidden>Tap a numbered dot to see what it is. Drag to look around.</p>
+  <ul class="hotspots" data-feature-list aria-label="Interior features shown in this illustration">
+    {features.map((f) => <li><strong>{f.title}</strong>{f.text}</li>)}
   </ul>
   <p class="viewer-note">Illustrative concept inspired by Oxynova Series 7 and 8 photographs. Proportions are approximate and the model is not manufacturer CAD. The opening is an artistic cutaway, not operating instructions. Press Escape to close the interior view.</p>
 </div>

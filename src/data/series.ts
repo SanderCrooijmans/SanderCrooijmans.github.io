@@ -1,7 +1,7 @@
 // Typed view over product-facts.json. Unknown values stay null and render as "Not stated by manufacturer".
 import facts from './product-facts.json';
 
-export const NOT_STATED = 'Not stated by manufacturer';
+export const NOT_STATED = 'Ask Oxynova';
 
 type Raw = (typeof facts.series)['series7'];
 export interface Series {

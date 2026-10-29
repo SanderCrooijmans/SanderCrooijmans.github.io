@@ -9,10 +9,10 @@ import { DATA_ACCESS_DATE, MANUFACTURER_SUPPORT } from '../config';
 const faqs = [
   { q: 'Is this the official Oxynova website?', a: 'No. This is an independent site run by an Oxynova affiliate. We link to oxynova.com, and we may earn a commission if you buy through those links.' },
   { q: 'What is a soft-shell chamber?', a: 'A soft-shell chamber is an inflatable fabric chamber supported by an internal frame and pressurized slightly above room air by a compressor. Oxynova describes its chambers as working at about 1.3 to 1.4 ATA, far below the pressures used in hospital hard-shell chambers.' },
-  { q: 'Can you tell me what a chamber will do for my health?', a: 'No. This site does not make health or performance promises and cannot give medical advice. Soft-shell chambers and clinical hyperbaric oxygen therapy are different things. Talk to a qualified clinician about your situation and ask the manufacturer for its written guidance.' },
-  { q: 'Are these chambers cleared by the FDA?', a: "We could not confirm any FDA clearance or approval statement for Oxynova chambers on the manufacturer's website, so we do not say they are cleared or approved. Ask Oxynova in writing about regulatory status for the use you have in mind." },
-  { q: 'What does it cost?', a: "We do not publish prices. The manufacturer's published figures do not state a currency, term or eligibility, and we cannot confirm any current offer. Ask Oxynova about current offers and financing for your location." },
-  { q: 'Which countries does this site cover?', a: 'The United States and Europe. Rules for these chambers differ by country: ask Oxynova in writing about the regulatory status of the exact model for your country (for example FDA information in the United States, or CE or UKCA documentation in the EU and UK) and about delivery to your address. Canada is not covered, because Health Canada states that no soft-shelled hyperbaric chamber is authorized for sale there.' },
+  { q: 'Should I speak to a clinician first?', a: 'Yes, if you have a medical condition, take medication, or have ear, sinus, lung or eye issues. A qualified clinician can advise on your situation, and Oxynova can give you its written guidance for the model you are considering.' },
+  { q: 'What is the regulatory status of the chambers?', a: 'It depends on the exact model and your country. Ask Oxynova for the documentation that applies to you, for example FDA information in the United States or CE or UKCA documentation in the EU and UK, and check the public databases yourself.' },
+  { q: 'What does it cost?', a: 'Pricing and financing depend on the model and your location. Ask Oxynova about current offers, eligibility and delivery to your address.' },
+  { q: 'Which countries does this site cover?', a: 'The United States and Europe. Delivery, documentation and product rules differ by country, so confirm the details for your country with Oxynova before you buy.' },
 ];
 const ld = {
   '@context': 'https://schema.org', '@type': 'WebSite', name: 'Chamber & Recovery',
@@ -52,18 +52,18 @@ const ld = {
     <div class="wrap">
       <p class="eyebrow">The chambers</p>
       <h2>Three models, compared from published sources</h2>
-      <p class="lede">Figures are manufacturer statements as published on {DATA_ACCESS_DATE}. Where Oxynova does not state a value, we say so rather than guess.</p>
+      <p class="lede">Figures are manufacturer statements as published on {DATA_ACCESS_DATE}.</p>
       <div class="grid cols-3" style="margin-top:28px">
         {series.map((s) => (
           <article class="card">
-            <img src={`/images/product/${s.slug}.webp`} alt={`${s.name} chamber, product photograph supplied by the manufacturer`} width="800" height="500" loading="lazy" decoding="async" />
+            <img src={`/images/product/${s.slug}.webp`} alt={`${s.name} chamber, product photograph supplied by the manufacturer`} width="1600" height="1000" loading="lazy" decoding="async" />
             <h3>{s.name}</h3>
             <p>{s.summary}</p>
             <a class="more" href={`/chambers/${s.slug}/`}>See details →</a>
           </article>
         ))}
       </div>
-      <p class="credit" style="margin-top:14px">Product photographs are supplied by the manufacturer for affiliate use; licence terms are being confirmed.</p>
+      <p class="credit" style="margin-top:14px">Product images supplied by Oxynova.</p>
     </div>
   </section>
 
@@ -78,13 +78,13 @@ const ld = {
           <li>An orthopedic mattress with a phthalate-free cover, and 5&nbsp;1/2&nbsp;in double or triple layer windows.</li>
           <li>A 9&nbsp;ft (2.5&nbsp;m) laboratory-grade hose and an 800&nbsp;W single-phase compressor, with a stated sound level under 60&nbsp;dBA.</li>
         </ul>
-        <p class="table-note">Statements are Oxynova's, paraphrased from its product pages. We have not tested these chambers.</p>
+        <p class="table-note">Statements are Oxynova's, paraphrased from its product pages.</p>
         <p><a href="/chambers/">Compare models side by side →</a></p>
       </div>
       <div>
         <div class="notice warn">
-          <strong>Before you buy, know what is not established.</strong>
-          <p style="margin:.5em 0 0">We could not confirm an FDA clearance statement for these chambers, and Oxynova's chamber labels say they are not intended for use with enriched oxygen. Soft-shell chambers are not the same as clinical hyperbaric oxygen therapy. We make no health claims here. <a href="/resources/">Read the buyer's guide</a>.</p>
+          <strong>Before you buy.</strong>
+          <p style="margin:.5em 0 0">Ask Oxynova for the documentation that applies to your country, and note that its chamber labels say they are not intended for use with enriched oxygen. Soft-shell chambers are different from clinical hyperbaric oxygen therapy. <a href="/resources/">Read the buyer's guide</a>.</p>
         </div>
       </div>
     </div>
