@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sandercrooijmans.github.io/sitemap-index.xml
