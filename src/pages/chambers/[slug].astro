@@ -1,0 +1,123 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import Disclosure from '../../components/Disclosure.astro';
+import ChamberViewer from '../../components/ChamberViewer.astro';
+import { series, dims, NOT_STATED, warranty, bySlug } from '../../data/series';
+import { DATA_ACCESS_DATE, MANUFACTURER_SUPPORT } from '../../config';
+
+export function getStaticPaths() {
+  return series.map((s) => ({ params: { slug: s.slug }, props: { slug: s.slug } }));
+}
+const { slug } = Astro.props;
+const s = bySlug(slug)!;
+const d = dims(s);
+const r = s.raw as any;
+const rows: [string, string | null][] = [
+  ['Stated working pressure', d.pressure],
+  ['Outer diameter', d.diameter],
+  ['Outer length', d.length],
+  ['Chamber weight', d.weight],
+  ['Windows', d.windows],
+  ['Pass-through fittings', d.fittings],
+  ['Occupancy', d.capacity],
+  ['Compressor sound level', d.noise],
+  ['Compressor power', d.power],
+  ['Interior dimensions', d.interiorSize],
+  ['Access / opening type and size', r.accessMechanism],
+];
+const others = series.filter((o) => o.slug !== s.slug);
+const imgAlt = `${s.name} soft-shell chamber on a black cradle, product photograph supplied by the manufacturer`;
+const ld = { '@context': 'https://schema.org', '@type': 'WebPage', name: `${s.name} overview`, description: `${s.name} figures as published by the manufacturer.` };
+---
+<Base title={`${s.name}: specifications and ownership questions`} description={`${s.name} figures as published by the manufacturer, with unknown values marked, plus ownership and suitability questions. Independent affiliate site.`} image={`/images/product/${s.slug}.webp`} jsonLd={ld}>
+  <section>
+    <div class="wrap">
+      <p class="eyebrow"><a href="/chambers/">Chambers</a> / {s.short}</p>
+      <h1>{s.name}</h1>
+      <p class="lede">{s.summary}</p>
+      <div class="split" style="margin-top:28px">
+        <figure style="margin:0">
+          <img class="photo" src={`/images/product/${s.slug}.webp`} alt={imgAlt} width="1400" height="875" decoding="async" fetchpriority="high" />
+          <figcaption class="credit">Photograph supplied by the manufacturer for affiliate use; licence terms are being confirmed.</figcaption>
+        </figure>
+        <div>
+          <h2 style="font-size:1.5rem">At a glance</h2>
+          <ul class="checklist">
+            <li>Stated working pressure: {d.pressure ?? NOT_STATED}.</li>
+            <li>Outer size: {d.diameter ?? NOT_STATED} diameter by {d.length ?? NOT_STATED} long.</li>
+            <li>Windows: {d.windows ?? NOT_STATED}.</li>
+            <li>Manufacturer warranty: lifetime, with stated exclusions.</li>
+          </ul>
+          <div class="cta-row"><CTA label="View at Oxynova" placement={`detail-${s.slug}`} note /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>Specifications</h2>
+      <p class="table-note" style="margin-top:0">Manufacturer statements from oxynova.com, read {DATA_ACCESS_DATE}. “{NOT_STATED}” means we could not find the value, not that it does not exist.</p>
+      <div class="table-wrap" role="region" aria-label={`${s.short} specifications`} tabindex="0">
+        <table>
+          <tbody>
+            {rows.map(([k, v]) => <tr><th scope="row">{k}</th><td class={v ? '' : 'unknown'}>{v ?? NOT_STATED}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Do not use outer dimensions to judge how much room there is inside, or whether a particular person will fit. Ask Oxynova for interior measurements and for fit guidance in writing.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <p class="eyebrow">Illustration</p>
+          <h2>A look at the layout</h2>
+          <p>This 3D illustration shows the general arrangement of a soft-shell chamber: fabric shell, round windows, valves, a zipper opening, a liner, an internal frame and a mattress. It is a concept inspired by Series 7 and 8 photographs, not an exact model of {s.short}, and the opening shown is an artistic cutaway, not operating instructions.</p>
+        </div>
+        <ChamberViewer id={`viewer-${s.slug}`} />
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Warranty</h3>
+          <p>{warranty.coverage} {warranty.exclusionsQuote}</p>
+          <p class="table-note">Oxynova's public page does not define “lifetime”, explain how to claim, or state geography, transferability or shipping costs. Ask for the written warranty before you buy.</p>
+          <a class="more" href={MANUFACTURER_SUPPORT.warrantyPage} rel="noopener noreferrer" target="_blank">Official warranty page ↗</a>
+        </div>
+        <div class="card">
+          <h3>Support (not a sales link)</h3>
+          <p>For product, safety and warranty help, use Oxynova's own channels. Email <a href={`mailto:${MANUFACTURER_SUPPORT.email}`}>{MANUFACTURER_SUPPORT.email}</a> or see its contact page.</p>
+          <a class="more" href={MANUFACTURER_SUPPORT.contactPage} rel="noopener noreferrer" target="_blank">Official Oxynova contact page ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <h2>Questions to settle before purchase</h2>
+      <ul class="checklist">
+        <li>Is this model approved, cleared or CE/UKCA-marked for my intended use in my country? Ask for the answer in writing.</li>
+        <li>What are the interior dimensions, and how does a person get in and out?</li>
+        <li>What are the manufacturer's written safety instructions, including what must never be used inside?</li>
+        <li>What power, floor space and ventilation does the compressor need?</li>
+        <li>What are delivery time, installation help, training and replacement-part availability?</li>
+        <li>Is any current offer or financing available for my location, and what are the exact terms?</li>
+        <li>Is this suitable for me? Only a qualified clinician who knows your health history can answer that.</li>
+      </ul>
+      <div class="cta-row" style="margin-top:24px"><CTA label="Check current availability" placement={`detail-${s.slug}-bottom`} /></div>
+      <p class="cta-note">Opens oxynova.com. Independent Oxynova affiliate; we may earn a commission when you purchase through our links.</p>
+      <h3 style="margin-top:40px">Compare with</h3>
+      <p>{others.map((o, i) => <span><a href={`/chambers/${o.slug}/`}>{o.name}</a>{i < others.length - 1 ? ' · ' : ''}</span>)}</p>
+      <Disclosure />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../config';
+---
+<Base title="Privacy notice" description="What this website collects (nothing beyond ordinary server logs), what it does not collect, and how to contact the operator about privacy.">
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy notice</h1>
+      <p class="lede">This version describes the site as built today. We will update it before adding any form, analytics or other integration.</p>
+      <h2>What this site collects</h2>
+      <ul class="checklist">
+        <li><strong>No forms, accounts or payments.</strong> The site has no contact form. To contact us you email us, and we use your message only to reply.</li>
+        <li><strong>No analytics, advertising pixels or tracking cookies</strong> are set by the site itself.</li>
+        <li><strong>Hosting logs.</strong> The hosting provider that serves the site may record technical data such as IP address, browser and pages requested for security and operation. The provider's own privacy terms apply.</li>
+        <li><strong>Fonts.</strong> The site uses system fonts and loads no third-party font service.</li>
+      </ul>
+      <h2>Links to oxynova.com</h2>
+      <p>When you click a sales link you leave this site. Oxynova's website uses its own cookies, including an affiliate referral cookie that lets Oxynova credit our referral. Oxynova's privacy and cookie terms apply there. We do not receive your personal data from Oxynova. We may later receive aggregate or order-level commission reports from the affiliate program.</p>
+      <h2>Health information</h2>
+      <p>Please do not send medical or health information to us, by email or otherwise. We cannot treat it as confidential medical data and have no use for it.</p>
+      <h2>Your choices and contact</h2>
+      <p>To ask what we hold about you or to have an email deleted, write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. If you are in the European Economic Area or the United Kingdom, you can also ask us to access, correct or erase your data, and you can complain to your national data protection authority.</p>
+      <p class="table-note">This notice is a plain-language description, not legal advice. It does not make any claim of compliance with any specific health-privacy law.</p>
+    </div>
+  </section>
+</Base>

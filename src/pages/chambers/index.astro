@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import Disclosure from '../../components/Disclosure.astro';
+import { series, dims, NOT_STATED } from '../../data/series';
+import { DATA_ACCESS_DATE } from '../../config';
+
+const rows: { label: string; get: (d: ReturnType<typeof dims>) => string | null }[] = [
+  { label: 'Stated working pressure', get: (d) => d.pressure },
+  { label: 'Outer diameter', get: (d) => d.diameter },
+  { label: 'Outer length', get: (d) => d.length },
+  { label: 'Chamber weight', get: (d) => d.weight },
+  { label: 'Windows', get: (d) => d.windows },
+  { label: 'Pass-through fittings', get: (d) => d.fittings },
+  { label: 'Occupancy', get: (d) => d.capacity },
+  { label: 'Compressor sound level', get: (d) => d.noise },
+  { label: 'Compressor power', get: (d) => d.power },
+  { label: 'Interior dimensions', get: (d) => d.interiorSize },
+];
+---
+<Base title="Compare Oxynova Series 7, 8 and 9" description="Side-by-side Oxynova Series 7, 8 and 9 figures as published by the manufacturer, with unknown values marked as not stated. Independent affiliate site.">
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Chambers</p>
+      <h1>Compare Series 7, 8 and 9</h1>
+      <p class="lede">Everything below is a manufacturer statement from oxynova.com, read on {DATA_ACCESS_DATE}. We have not measured or tested these chambers, and we do not infer values from the model number.</p>
+
+      <div class="table-wrap" style="margin-top:32px" role="region" aria-label="Chamber comparison table" tabindex="0">
+        <table>
+          <caption class="sr-only">Oxynova Series 7, 8 and 9 compared</caption>
+          <thead><tr><th scope="col">Detail</th>{series.map((s) => <th scope="col"><a href={`/chambers/${s.slug}/`}>{s.short}</a></th>)}</tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr><th scope="row">{r.label}</th>{series.map((s) => { const v = r.get(dims(s)); return <td class={v ? '' : 'unknown'}>{v ?? NOT_STATED}</td>; })}</tr>
+            ))}
+            <tr><th scope="row">Price</th>{series.map(() => <td class="unknown">Not published here. Ask about current manufacturer offers.</td>)}</tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Oxynova's overview page says its chambers operate at 1.4 ATA generally, while its Series 8 and 9 pages state 1.3 ATA, so confirm the working pressure for the exact model in writing. The same 0.562 m³ volume figure is printed for every model despite different sizes, so we leave it out. Series 8 and 9 weights and capacity statements come from separate product pages. Outer dimensions are not interior space.</p>
+
+      <div class="notice warn">
+        <strong>Check the fine print.</strong> The label on a photographed Series 8 chamber reads “Not intended for use with enriched oxygen.” Do not assume any chamber is suitable for oxygen enrichment. Ask Oxynova to confirm in writing what is and is not permitted for the model you are considering.
+      </div>
+
+      <h2 style="margin-top:56px">Which questions separate the models?</h2>
+      <div class="grid cols-3">
+        <div class="card"><h3>Space</h3><p>Series 9 is the longest and widest on the published figures. Measure your room, doorways and stairs, and plan space for the compressor and hose as well as the chamber.</p></div>
+        <div class="card"><h3>Who will use it</h3><p>Oxynova describes Series 9 as hosting up to two users and Series 8 as suited to professional settings. A stated capacity is not a recommendation for any person or condition.</p></div>
+        <div class="card"><h3>Support and terms</h3><p>All three carry the same stated warranty. Ask about delivery, installation, training and what happens if a part needs replacing.</p></div>
+      </div>
+
+      <div style="margin-top:36px" class="cta-row">
+        <CTA label="Explore manufacturer options" placement="chambers-compare" />
+        <a class="btn ghost" href="/resources/">Questions to ask first</a>
+      </div>
+      <p class="cta-note">Opens oxynova.com. Independent Oxynova affiliate; we may earn a commission when you purchase through our links.</p>
+      <Disclosure />
+    </div>
+  </section>
+</Base>

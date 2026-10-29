@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Disclosure from '../components/Disclosure.astro';
+import { CONTACT_EMAIL, INSTAGRAM_URL, MANUFACTURER_SUPPORT } from '../config';
+---
+<Base title="About and contact" description="Who runs this independent Oxynova affiliate site, how to contact the operator, and where to find official manufacturer support.">
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">About and contact</p>
+      <h1>An independent affiliate site</h1>
+      <p class="lede">This site is run by an independent Oxynova affiliate to explain the products clearly and send interested buyers to the manufacturer.</p>
+      <p>We are not Oxynova, we do not sell chambers, and we do not take orders, payments or health information. If you buy from oxynova.com after clicking a link here, we may earn a commission. We do not add anything to your price. Our relationship is a standard affiliate arrangement. It is not an authorized distributorship, and we do not describe it as one.</p>
+
+      <h2>Contact the operator</h2>
+      <p>For questions about this website, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Please do not send medical details. We cannot give medical advice, and we may not be able to answer product or safety questions that only the manufacturer can answer.</p>
+      {INSTAGRAM_URL && <p>Instagram: <a href={INSTAGRAM_URL} rel="me noopener" target="_blank">our profile</a>.</p>}
+
+      <h2>Contact the manufacturer</h2>
+      <p>These are Oxynova's own channels. They are not sales links of ours, and we are not involved in them.</p>
+      <ul class="checklist">
+        <li><a href={MANUFACTURER_SUPPORT.contactPage} rel="noopener noreferrer" target="_blank">Official Oxynova contact page ↗</a></li>
+        <li>Email: <a href={`mailto:${MANUFACTURER_SUPPORT.email}`}>{MANUFACTURER_SUPPORT.email}</a> (Oxynova lists this for sales inquiries)</li>
+        <li><a href={MANUFACTURER_SUPPORT.warrantyPage} rel="noopener noreferrer" target="_blank">Official warranty page ↗</a></li>
+      </ul>
+      <p class="table-note">We do not know how Oxynova attributes commissions for phone calls, email quotes or purchases made on another device. If you contact Oxynova directly, that is entirely your choice.</p>
+      <Disclosure />
+    </div>
+  </section>
+</Base>

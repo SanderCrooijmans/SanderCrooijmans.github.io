@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../config';
+---
+<Base title="Terms of use" description="Terms for using this independent Oxynova affiliate information site, including no medical advice and no guarantee of accuracy.">
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">Legal</p>
+      <h1>Terms of use</h1>
+      <h2>Information only</h2>
+      <p>This site provides general information. It is not medical, legal or financial advice, and it does not diagnose, treat or recommend treatment for any condition. Talk to a qualified professional about your situation.</p>
+      <h2>Accuracy</h2>
+      <p>Product facts are statements the manufacturer published on the dates shown. They may change, and they may contain errors. We do our best to read and report them faithfully, but we do not guarantee that they are complete or current. Always confirm important details with the manufacturer in writing before buying.</p>
+      <h2>Independent relationship</h2>
+      <p>We are an independent Oxynova affiliate. We do not sell products, take orders or set prices, and any purchase is a contract between you and the seller. Oxynova is a trademark of its owner and is used here only to identify the products discussed.</p>
+      <h2>Region</h2>
+      <p>The site is written for visitors in the United States and Europe. It is not an advertisement or offer to sell in any jurisdiction where doing so is not permitted.</p>
+      <h2>Contact</h2>
+      <p>Questions about these terms: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. This text is a plain-language starting point and has not been reviewed by a lawyer.</p>
+    </div>
+  </section>
+</Base>

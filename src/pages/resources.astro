@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import Disclosure from '../components/Disclosure.astro';
+import { regulatory } from '../data/series';
+import { MANUFACTURER_SUPPORT } from '../config';
+
+const terms: [string, string][] = [
+  ['ATA', 'Atmospheres absolute. 1.0 ATA is normal sea-level air pressure. Oxynova states working pressures of 1.3 to 1.4 ATA, depending on the model and page.'],
+  ['Soft-shell chamber', 'An inflatable fabric chamber with an internal frame, pressurized by a compressor. Also called a mild or portable chamber.'],
+  ['Hard-shell chamber', 'A rigid vessel used in clinical settings at higher pressures under medical supervision. A different type of device.'],
+  ['mHBOT', 'Mild hyperbaric oxygen therapy, a term some sellers use for soft-shell chambers. Because it is easily confused with clinical therapy, we avoid it in claims.'],
+  ['Enriched oxygen', 'Air with more than the normal share of oxygen. Oxynova chamber labels say the chambers are not intended for use with it.'],
+  ['Pass-through fitting', 'A port in the chamber wall for hoses or cables. Ask the manufacturer what may be connected to each one.'],
+];
+---
+<Base title="Buyer's guide and evidence explainer" description="Plain-English buyer's guide to soft-shell chambers: terms, questions for the manufacturer and clinician, and a balanced explainer on the evidence, with sources.">
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">Resources</p>
+      <h1>Buyer's guide</h1>
+      <p class="lede">What to understand, and what to ask, before buying a soft-shell chamber.</p>
+
+      <h2 id="terms">Terms in plain English</h2>
+      <dl>
+        {terms.map(([t, d]) => <><dt style="font-weight:600;color:var(--ink)">{t}</dt><dd style="margin:0 0 14px">{d}</dd></>)}
+      </dl>
+
+      <h2 id="manufacturer">Questions for the manufacturer</h2>
+      <p>Send these to Oxynova and ask for written answers. Use its official channels (<a href={`mailto:${MANUFACTURER_SUPPORT.email}`}>{MANUFACTURER_SUPPORT.email}</a>) so your answers do not depend on this site.</p>
+      <ol class="checklist">
+        <li>What is the exact regulatory status of this model in my country (FDA in the United States; CE or UKCA documentation in the EU and UK), and what intended use is stated on its label?</li>
+        <li>What does “Not intended for use with enriched oxygen” mean for accessories, and what is permitted inside the chamber?</li>
+        <li>What are the interior dimensions, and who has the model been designed for?</li>
+        <li>Does the “lifetime warranty” have a written definition, claim process and geography?</li>
+        <li>What are the delivery time and cost to my address, and what installation or training is included?</li>
+        <li>Is there a current offer or financing for my location, and what are the exact terms and expiry?</li>
+      </ol>
+
+      <h2 id="clinician">Questions for a clinician</h2>
+      <ol class="checklist">
+        <li>Is pressurized-chamber use appropriate for someone with my history, medications and any ear, sinus, lung or eye issues?</li>
+        <li>What symptoms should make me stop and seek care?</li>
+        <li>Is there an established alternative for the goal I have in mind?</li>
+      </ol>
+
+      <h2 id="evidence">A balanced explainer on the evidence</h2>
+      <p>Hospital hyperbaric oxygen therapy uses a rigid chamber, higher pressure and high-concentration oxygen, under medical supervision, for specific conditions. FDA describes these devices as regulated medical devices and warns people about uses it has not cleared.<sup><a href="#n1">1</a></sup> Studies of that therapy do not tell us what a soft-shell chamber working at 1.3 to 1.4 ATA with ambient air does, because the pressure, oxygen concentration, duration and device differ.</p>
+      <p>Health Canada states that no soft-shelled hyperbaric chamber is authorized for sale in Canada because it has not received evidence of safety, effectiveness or quality, and it warns of fire risk, particularly together with an oxygen concentrator.<sup><a href="#n2">2</a></sup> For these reasons we make no claims about health, recovery, longevity or performance, and we encourage you to read the primary sources yourself.</p>
+      <ol class="table-note" style="padding-left:1.2em">
+        <li id="n1"><a href={regulatory.usFDA.source} rel="noopener noreferrer" target="_blank">FDA letter to health care providers: follow instructions for safe use of hyperbaric oxygen therapy devices ↗</a></li>
+        <li id="n2"><a href={regulatory.healthCanada.advisorySource} rel="noopener noreferrer" target="_blank">Health Canada public advisory, {regulatory.healthCanada.advisoryDate} ↗</a></li>
+      </ol>
+
+      <div class="cta-row" style="margin-top:32px"><CTA label="Explore manufacturer options" placement="resources" /></div>
+      <p class="cta-note">Opens oxynova.com. Independent Oxynova affiliate; we may earn a commission when you purchase through our links.</p>
+      <Disclosure />
+    </div>
+  </section>
+</Base>

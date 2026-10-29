@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import Disclosure from '../components/Disclosure.astro';
+import ChamberViewer from '../components/ChamberViewer.astro';
+import { series } from '../data/series';
+import { DATA_ACCESS_DATE, MANUFACTURER_SUPPORT } from '../config';
+
+const faqs = [
+  { q: 'Is this the official Oxynova website?', a: 'No. This is an independent site run by an Oxynova affiliate. We link to oxynova.com, and we may earn a commission if you buy through those links.' },
+  { q: 'What is a soft-shell chamber?', a: 'A soft-shell chamber is an inflatable fabric chamber supported by an internal frame and pressurized slightly above room air by a compressor. Oxynova describes its chambers as working at about 1.3 to 1.4 ATA, far below the pressures used in hospital hard-shell chambers.' },
+  { q: 'Can you tell me what a chamber will do for my health?', a: 'No. This site does not make health or performance promises and cannot give medical advice. Soft-shell chambers and clinical hyperbaric oxygen therapy are different things. Talk to a qualified clinician about your situation and ask the manufacturer for its written guidance.' },
+  { q: 'Are these chambers cleared by the FDA?', a: "We could not confirm any FDA clearance or approval statement for Oxynova chambers on the manufacturer's website, so we do not say they are cleared or approved. Ask Oxynova in writing about regulatory status for the use you have in mind." },
+  { q: 'What does it cost?', a: "We do not publish prices. The manufacturer's published figures do not state a currency, term or eligibility, and we cannot confirm any current offer. Ask Oxynova about current offers and financing for your location." },
+  { q: 'Which countries does this site cover?', a: 'The United States and Europe. Rules for these chambers differ by country: ask Oxynova in writing about the regulatory status of the exact model for your country (for example FDA information in the United States, or CE or UKCA documentation in the EU and UK) and about delivery to your address. Canada is not covered, because Health Canada states that no soft-shelled hyperbaric chamber is authorized for sale there.' },
+];
+const ld = {
+  '@context': 'https://schema.org', '@type': 'WebSite', name: 'Chamber & Recovery',
+  description: 'Independent affiliate guide to Oxynova soft-shell chambers for visitors in the United States and Europe.',
+};
+---
+<Base title="Chamber & Recovery | Independent Oxynova Affiliate" description="An independent, source-checked guide to Oxynova soft-shell chambers for home buyers, clubs and recovery businesses. Affiliate links disclosed." jsonLd={ld}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Independent Oxynova affiliate · United States &amp; Europe</p>
+        <h1>A considered space for your recovery routine</h1>
+        <p class="lede">Clear, source-checked information on Oxynova soft-shell chambers for homes, clubs and recovery businesses, so you can ask the right questions before you buy.</p>
+        <div class="cta-row">
+          <a class="btn" href="/chambers/">Explore chambers</a>
+          <CTA variant="ghost" label="View at Oxynova" placement="home-hero" />
+        </div>
+        <p class="cta-note">Independent Oxynova affiliate. We may earn a commission when you purchase through our links. “View at Oxynova” takes you to oxynova.com.</p>
+      </div>
+      <ChamberViewer hero />
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Start with your situation</p>
+      <h2>Who this guide is for</h2>
+      <div class="grid cols-3">
+        <a class="card" href="/home-wellness/" style="text-decoration:none"><h3>Home buyers</h3><p>Space planning, power, noise, installation and the ownership questions that come before the purchase.</p><span class="more">Plan a home setup →</span></a>
+        <a class="card" href="/athletes-and-clubs/" style="text-decoration:none"><h3>Athletes and clubs</h3><p>Scheduling, cleaning and facility considerations for shared recovery spaces.</p><span class="more">Facility planning →</span></a>
+        <a class="card" href="/clinics-and-recovery-businesses/" style="text-decoration:none"><h3>Businesses</h3><p>A procurement checklist: regulatory status, training, support and intended-use checks.</p><span class="more">Procurement checklist →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">The chambers</p>
+      <h2>Three models, compared from published sources</h2>
+      <p class="lede">Figures are manufacturer statements as published on {DATA_ACCESS_DATE}. Where Oxynova does not state a value, we say so rather than guess.</p>
+      <div class="grid cols-3" style="margin-top:28px">
+        {series.map((s) => (
+          <article class="card">
+            <img src={`/images/product/${s.slug}.webp`} alt={`${s.name} chamber, product photograph supplied by the manufacturer`} width="800" height="500" loading="lazy" decoding="async" />
+            <h3>{s.name}</h3>
+            <p>{s.summary}</p>
+            <a class="more" href={`/chambers/${s.slug}/`}>See details →</a>
+          </article>
+        ))}
+      </div>
+      <p class="credit" style="margin-top:14px">Product photographs are supplied by the manufacturer for affiliate use; licence terms are being confirmed.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">What Oxynova says about construction</p>
+        <h2>Design details worth asking about</h2>
+        <ul class="checklist">
+          <li>High-frequency, adhesive-free welded seams, and a double or triple integrated zipper system.</li>
+          <li>An internal stainless steel framework that Oxynova says assembles with quick connections and no tools.</li>
+          <li>An orthopedic mattress with a phthalate-free cover, and 5&nbsp;1/2&nbsp;in double or triple layer windows.</li>
+          <li>A 9&nbsp;ft (2.5&nbsp;m) laboratory-grade hose and an 800&nbsp;W single-phase compressor, with a stated sound level under 60&nbsp;dBA.</li>
+        </ul>
+        <p class="table-note">Statements are Oxynova's, paraphrased from its product pages. We have not tested these chambers.</p>
+        <p><a href="/chambers/">Compare models side by side →</a></p>
+      </div>
+      <div>
+        <div class="notice warn">
+          <strong>Before you buy, know what is not established.</strong>
+          <p style="margin:.5em 0 0">We could not confirm an FDA clearance statement for these chambers, and Oxynova's chamber labels say they are not intended for use with enriched oxygen. Soft-shell chambers are not the same as clinical hyperbaric oxygen therapy. We make no health claims here. <a href="/resources/">Read the buyer's guide</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">Ownership</p>
+      <h2>Warranty, support and the practical questions</h2>
+      <div class="grid cols-2">
+        <div class="card"><h3>Manufacturer warranty</h3><p>Oxynova states that its products are warranted free from defects in materials and workmanship, and that the warranty does not cover accidents, improper care, negligence or normal wear and tear. It calls this a lifetime warranty, but its public page does not define “lifetime” or explain how to make a claim.</p><a class="more" href={MANUFACTURER_SUPPORT.warrantyPage} rel="noopener noreferrer" target="_blank">Oxynova's official warranty page ↗</a></div>
+        <div class="card"><h3>Support</h3><p>For product, safety and warranty questions, use Oxynova's own support channels. They are separate from the sales links on this site, and you never need to click a sales link to reach them.</p><a class="more" href={MANUFACTURER_SUPPORT.contactPage} rel="noopener noreferrer" target="_blank">Official Oxynova contact page ↗</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">Questions</p>
+      <h2>Frequently asked</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+      <div style="margin-top:28px"><CTA label="Check current availability" placement="home-faq" note /></div>
+      <Disclosure />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,27 @@
+---
+interface Props { id?: string; hero?: boolean }
+const { id = 'viewer', hero = false } = Astro.props;
+---
+<div class="viewer-block" data-viewer id={id}>
+  <div class="viewer" data-stage>
+    <img class="poster" src="/images/3d/chamber-hero-closed.webp" alt="Illustration of a soft-shell chamber on a black cradle: a navy fabric cylinder with round windows, two valves and a curved zipper panel on top."
+      width="1800" height="1200" fetchpriority={hero ? 'high' : 'auto'} decoding="async" />
+    <span class="state" data-state aria-live="polite">Static view</span>
+  </div>
+  <div class="viewer-controls" role="group" aria-label="3D view controls">
+    <button type="button" data-action="rotate" aria-pressed="false">Rotate</button>
+    <button type="button" data-action="pause" aria-pressed="true">Pause</button>
+    <button type="button" data-action="inside" aria-pressed="false">Look inside</button>
+    <button type="button" data-action="reset">Reset</button>
+  </div>
+  <ul class="hotspots" data-hotspots aria-label="Interior features shown in this illustration">
+    <li><strong>Flexible zipper panel</strong>Oxynova describes a double or triple integrated system zipper. The opening shown is an artistic cutaway.</li>
+    <li><strong>Liner and frame</strong>Oxynova describes a stainless steel internal framework. The liner shape here is illustrative.</li>
+    <li><strong>Mattress</strong>Oxynova describes an orthopedic mattress with a phthalate-free cover.</li>
+    <li><strong>Windows</strong>Oxynova lists 5&nbsp;1/2&nbsp;in windows, with counts that vary by model. This model shows three per side.</li>
+  </ul>
+  <p class="viewer-note">Illustrative concept inspired by Oxynova Series 7 and 8 photographs. Proportions are approximate and the model is not manufacturer CAD. The opening is an artistic cutaway, not operating instructions. Press Escape to close the interior view.</p>
+</div>
+<script>
+  import '../scripts/viewer';
+</script>

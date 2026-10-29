@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import { DISCLOSURE_LONG, DISCLOSURE_SHORT, REGION_NOTICE } from '../config';
+---
+<Base title="Affiliate disclosure" description="How this independent site relates to Oxynova, how it earns commissions, and how to tell sales links from official support links.">
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">Legal</p>
+      <h1>Affiliate disclosure</h1>
+      <p class="lede">{DISCLOSURE_SHORT}</p>
+      <p>{DISCLOSURE_LONG}</p>
+      <h2>How to tell links apart</h2>
+      <ul class="checklist">
+        <li><strong>Sales links</strong> are buttons labelled “View at Oxynova”, “Explore manufacturer options” or “Check current availability”. They open oxynova.com in a new tab, carry a referral identifier, and are marked as sponsored.</li>
+        <li><strong>Support links</strong> are labelled “official” and go to oxynova.com support, contact or warranty pages. They are not tracking links, and you never need to click a sales link to reach support.</li>
+      </ul>
+      <h2>What we do not claim</h2>
+      <ul class="checklist">
+        <li>We are not the official Oxynova website or account, and we are not an authorized distributor or reseller.</li>
+        <li>We have not tested these products. Product facts are manufacturer statements as published on the dates shown.</li>
+        <li>We do not publish prices or discounts unless we can verify a current offer, its eligibility, expiry and how to redeem it.</li>
+        <li>We do not publish testimonials or ratings.</li>
+      </ul>
+      <h2>Region</h2>
+      <p>{REGION_NOTICE}</p>
+      <h2>Commissions</h2>
+      <p>A purchase made after clicking one of our links does not always result in a commission, and attribution depends on the manufacturer's program rules and your browsing. We do not add anything to the price you pay.</p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,16 @@
+---
+// Every commercial manufacturer link on the site goes through this component.
+import { AFFILIATE_URL } from '../config';
+interface Props { label?: string; variant?: 'primary' | 'ghost'; small?: boolean; note?: boolean; placement?: string }
+const { label = 'View at Oxynova', variant = 'primary', small = false, note = false, placement = 'unspecified' } = Astro.props;
+const cls = ['btn', variant === 'ghost' ? 'ghost' : '', small ? 'small' : ''].join(' ').trim();
+---
+<span class="cta-wrap">
+  <a class={cls} href={AFFILIATE_URL} rel="sponsored noopener noreferrer" target="_blank" data-affiliate-cta data-placement={placement}>
+    {label}<span aria-hidden="true"> &#8599;</span><span class="sr-only"> (opens oxynova.com in a new tab; affiliate link)</span>
+  </a>
+  {note && <span class="cta-note" style="display:block">Affiliate link to oxynova.com. We may earn a commission.</span>}
+</span>
+<style is:global>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>

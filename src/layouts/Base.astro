@@ -1,0 +1,105 @@
+---
+import '../styles/global.css';
+import { SITE_NAME, SITE_TAGLINE, DISCLOSURE_SHORT, CONTACT_EMAIL, INSTAGRAM_URL, MANUFACTURER_SUPPORT, REGION_NOTICE } from '../config';
+interface Props { title: string; description: string; image?: string; noindex?: boolean; jsonLd?: object }
+const { title, description, image = '/images/3d/chamber-hero-closed.webp', noindex = false, jsonLd } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+const nav = [
+  { href: '/chambers/', label: 'Chambers' },
+  { href: '/home-wellness/', label: 'Home' },
+  { href: '/athletes-and-clubs/', label: 'Athletes & clubs' },
+  { href: '/clinics-and-recovery-businesses/', label: 'Businesses' },
+  { href: '/resources/', label: 'Resources' },
+  { href: '/about/', label: 'About & contact' },
+];
+const path = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0a1322" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="topbar"><div class="wrap">{DISCLOSURE_SHORT} <a href="/affiliate-disclosure/">Details</a></div></div>
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label={`${SITE_NAME} home`}>
+          <img src="/emblem.svg" alt="" width="38" height="38" />
+          <span>{SITE_NAME}<small>{SITE_TAGLINE}</small></span>
+        </a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-primary" id="menu-btn">Menu</button>
+        <nav class="primary" id="nav-primary" aria-label="Primary">
+          <ul>
+            {nav.map((n) => <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>)}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site">
+      <div class="wrap">
+        <div class="cols">
+          <div>
+            <h2>{SITE_NAME}</h2>
+            <p>An independent site by an Oxynova affiliate. Not the official Oxynova website.</p>
+            <p>{REGION_NOTICE}</p>
+          </div>
+          <div>
+            <h2>Explore</h2>
+            <ul>
+              <li><a href="/chambers/">Compare chambers</a></li>
+              <li><a href="/resources/">Buyer's guide</a></li>
+              <li><a href="/home-wellness/">Home</a></li>
+              <li><a href="/athletes-and-clubs/">Athletes &amp; clubs</a></li>
+              <li><a href="/clinics-and-recovery-businesses/">Businesses</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Legal</h2>
+            <ul>
+              <li><a href="/affiliate-disclosure/">Affiliate disclosure</a></li>
+              <li><a href="/privacy/">Privacy</a></li>
+              <li><a href="/terms/">Terms</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              <li><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+              {INSTAGRAM_URL && <li><a href={INSTAGRAM_URL} rel="me noopener" target="_blank">Instagram</a></li>}
+            </ul>
+            <h2 style="margin-top:20px">Manufacturer support</h2>
+            <ul>
+              <li><a href={MANUFACTURER_SUPPORT.contactPage} rel="noopener noreferrer" target="_blank">Official Oxynova contact page</a></li>
+              <li><a href={MANUFACTURER_SUPPORT.warrantyPage} rel="noopener noreferrer" target="_blank">Official warranty page</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="fine">Oxynova is a trademark of its owner. This site uses the name only to identify the products it discusses. It is not affiliated with, endorsed by or operated by the manufacturer beyond a standard affiliate relationship. Nothing here is medical advice.</p>
+      </div>
+    </footer>
+    <script>
+      const b = document.getElementById('menu-btn'); const n = document.getElementById('nav-primary');
+      b?.addEventListener('click', () => { const o = n?.classList.toggle('open'); b.setAttribute('aria-expanded', String(!!o)); });
+    </script>
+  </body>
+</html>
